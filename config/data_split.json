@@ -1,0 +1,30 @@
+{
+  "train": {
+    "count": 79863,
+    "bdd": {
+      "path_imgs": "../bdd100k/bdd100k/images/100k/train/",
+      "path_labels": "../bdd100k/bdd100k/xml/train/",
+      "percent": 0.9,
+      "samples_count": null
+    },
+    "tes1": {
+      "path_imgs": "../bdd100k/bdd100k/images/100k/val/",
+      "path_labels": "../bdd100k/bdd100k/xml/val/",
+      "percent": 0.1,
+      "samples_count": null
+    },
+    "test2": {
+      "path_imgs": "",
+      "path_labels": "",
+      "percent": 0.0,
+      "samples_count": null
+    }
+  },
+  "val": {
+    "path_imgs": "../bdd100k/bdd100k/images/100k/val/",
+    "path_labels": "../bdd100k/bdd100k/xml/val/",
+    "percent": 1.0,
+    "samples_count": -1
+  },
+  "test": {}
+}
