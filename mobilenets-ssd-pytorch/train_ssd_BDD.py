@@ -376,14 +376,14 @@ if __name__ == '__main__':
         train(train_loader, net, criterion, optimizer,
               device=DEVICE, debug_steps=args.debug_steps, epoch=epoch)
         
-        # if epoch % args.validation_epochs == 0 or epoch == args.num_epochs - 1:
-        #     val_loss, val_regression_loss, val_classification_loss = test(val_loader, net, criterion, DEVICE)
-        #     logging.info(
-        #         f"Epoch: {epoch}, " +
-        #         f"Validation Loss: {val_loss:.4f}, " +
-        #         f"Validation Regression Loss {val_regression_loss:.4f}, " +
-        #         f"Validation Classification Loss: {val_classification_loss:.4f}"
-        #     )
-        model_path = os.path.join(args.checkpoint_folder, f"{args.net}-Epoch-{epoch}.pth")
-        net.save(model_path)
-        logging.info(f"Saved model {model_path}")
+        if epoch % args.validation_epochs == 0 or epoch == args.num_epochs - 1:
+            val_loss, val_regression_loss, val_classification_loss = test(val_loader, net, criterion, DEVICE)
+            logging.info(
+                f"Epoch: {epoch}, " +
+                f"Validation Loss: {val_loss:.4f}, " +
+                f"Validation Regression Loss {val_regression_loss:.4f}, " +
+                f"Validation Classification Loss: {val_classification_loss:.4f}"
+            )
+            model_path = os.path.join(args.checkpoint_folder, f"{args.net}-Epoch-{epoch}.pth")
+            net.save(model_path)
+            logging.info(f"Saved model {model_path}")

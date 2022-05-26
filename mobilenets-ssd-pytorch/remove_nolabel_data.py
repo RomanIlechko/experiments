@@ -2,8 +2,8 @@ import glob
 import os
 
 os.path.join("..")
-img_src = glob.glob("../bdd100k/bdd100k/images/100k/train/*.jpg")
-xml_src = glob.glob("../bdd100k/bdd100k/xml/train/*.xml")
+img_src = glob.glob("../data/bdd100k/images/100k/train/*.jpg")
+xml_src = glob.glob("../data/bdd100k/xml/train/*.xml")
 
 img_name = []
 
@@ -37,13 +37,13 @@ for img in img_name:
 print(len(not_in_list))
 print(not_in_list)
 
-path = "../bdd100k/bdd100k/images/100k/train/" + not_in_list[0] + ".jpg"
+path = "../data/bdd100k/images/100k/train/" + not_in_list[0] + ".jpg"
 print(path)
 
 # Remove training samples which do not have anotation.
 count = 0
 for item in not_in_list:
-    path = "../bdd100k/bdd100k/images/100k/train/" + item + ".jpg"
+    path = "../data/bdd100k/images/100k/train/" + item + ".jpg"
     if os.path.exists(path):
         os.remove(path)
         count += 1
