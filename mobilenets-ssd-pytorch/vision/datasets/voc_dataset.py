@@ -72,13 +72,21 @@ class VOCDataset:
         assert Path(image_path).stem == Path(xml_path).stem, f"something wrong with {image_path}, {xml_path}"
         boxes, labels, is_difficult = self._get_annotation(xml_path)
         if not self.keep_difficult:
-            boxes = boxes[is_difficult == 0]
-            labels = labels[is_difficult == 0]
+            new_boxes = boxes[is_difficult == 0]
+            new_labels = labels[is_difficult == 0]
+            if len(new_boxes):
+                boxes = new_boxes
+                labels = new_labels
+        if len(boxes) == 0:
+            print(labels, xml_path, image_path)
         image = self._read_image(image_path)
         if self.transform:
             image, boxes, labels = self.transform(image, boxes, labels)
         if self.target_transform:
-            boxes, labels = self.target_transform(boxes, labels)
+            try:
+                boxes, labels = self.target_transform(boxes, labels)
+            except Exception as e:
+                print(f'{e} {labels, xml_path, image_path}')
         return image, boxes, labels
 
     def get_image(self, index):
@@ -129,6 +137,10 @@ class VOCDataset:
         boxes = []
         labels = []
         is_difficult = []
+        try:
+            some_object_iterator = iter(objects)
+        except TypeError as te:
+            print(f'is not iterable {objects}')
         for object in objects:
             class_name = object.find('name').text.lower().strip()
             # we're only concerned with clases in our list
@@ -140,6 +152,15 @@ class VOCDataset:
                 y1 = float(bbox.find('ymin').text) - 1
                 x2 = float(bbox.find('xmax').text) - 1
                 y2 = float(bbox.find('ymax').text) - 1
+
+                if x1 == 0.0:
+                    x1 = 1.0
+                if y1 == 0.0:
+                    y1 = 1.0
+                if x2 == 0.0:
+                    x2 = 1.0
+                if y2 == 0.0:
+                    y2 = 1.0
                 boxes.append([x1, y1, x2, y2])
 
                 labels.append(self.class_dict[class_name])

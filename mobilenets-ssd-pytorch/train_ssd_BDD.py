@@ -130,6 +130,8 @@ class DatasetPart:
 
     def get_paths(self):
         img_paths = glob(os.path.join(self.path_imgs, "*.jpg"))
+        png_paths = glob(os.path.join(self.path_imgs, "*.png"))
+        img_paths.extend(png_paths)
         # label_paths = glob(os.path.join(self.path_labels, "*.xml"))
         if self.samples_count != -1:
             img_paths = random.sample(img_paths, min(int(self.samples_count), len(img_paths)))
